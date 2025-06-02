@@ -4,7 +4,7 @@
  */
 package proyecto;
 import java.util.regex.Pattern;//sirve para trabajar con expresiones regulares
-//en este caso, la validación obligatoria de e-mail correctamente escrito.
+//en este caso, la validación obl   igatoria de e-mail correctamente escrito.
 /**
  *
  * @author Usuario
@@ -15,33 +15,28 @@ public abstract class Cliente {
     private String correo;
     private String idCliente;
 
-    public Cliente(String direccion, String telefono, String correo, String idCliente) {
-        this.direccion = direccion;
-        this.telefono = telefono;
-        this.correo = correo;
+    public Cliente(String direccion, String telefono, String correo) {
         this.idCliente = idCliente;
+        setDireccion(direccion);
+        setTelefono(telefono);
+        setCorreo(correo);
     }
-    
-    //MÉTODOS POLIMÓRFICOS PARA VALIDACIÓN
+
     public abstract boolean validarDocumento();
     public abstract String getNombreCompleto();
     public abstract String getDocumento();
-    
-    //GETTERS
-    public String getCorreo() {
-        return correo;
-    }
-    public String getDireccion() {
-        return direccion;
-    }
-    public String getIdCliente() {
-        return idCliente;
-    }
-    public String getTelefono() {
-        return telefono;
-    }
 
     //SETTERS
+    public void setIdCliente(String idCliente) {
+        this.idCliente = idCliente;
+    }
+    public void setTelefono(String telefono) {
+        if (telefono == null || !telefono.matches("\\d{9}")) {
+            throw new IllegalArgumentException("El teléfono debe tener exactamente 9 dígitos");
+        }
+        this.telefono = telefono;
+    }
+
     public void setCorreo(String correo) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
         if (correo == null || !Pattern.compile(emailRegex).matcher(correo).matches()) {
@@ -51,25 +46,23 @@ public abstract class Cliente {
     }
 
     public void setDireccion(String direccion) {
-         if (direccion == null || direccion.trim().isEmpty()) {
+        if (direccion == null || direccion.trim().isEmpty()) {
             throw new IllegalArgumentException("La dirección no puede estar vacía");
         }
-        this.direccion = direccion.trim();
-    }
-
-    public void setIdCliente(String idCliente) {
-        this.idCliente = idCliente;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
+        this.direccion = direccion;
     }
     
-    //MÉTODO POLIMÓRFICO DE IMPRESIÓN
+    
+    //GETTERS
+    public String getCorreo() { return correo; }
+    public String getDireccion() { return direccion; }
+    public String getIdCliente() { return idCliente; }
+    public String getTelefono() { return telefono; }
+
+    //Constructor
     @Override
     public String toString() {
-        return String.format("ID: %s | Dirección: %s | Teléfono: %s | Email: %s", 
+        return String.format("ID: %s | Dirección: %s | Teléfono: %s | Email: %s",
                 idCliente, direccion, telefono, correo);
     }
-    
 }

@@ -12,174 +12,118 @@ import java.util.Scanner;
 public class Tester {
 
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
+        Scanner sc = new Scanner(System.in);
+        ClienteController controlador = new ClienteController();
+
         boolean salir = false;
-
         while (!salir) {
-            System.out.println("\n--- MENÚ PRINCIPAL ---");
+            System.out.println("\n===== MENÚ PRINCIPAL =====");
             System.out.println("1. Gestión de Clientes");
-            System.out.println("2. Salir");
+            System.out.println("2. Opción futura");
+            System.out.println("3. Salir");
             System.out.print("Seleccione una opción: ");
-            String opcion = scanner.nextLine();
+            String opcionPrincipal = sc.nextLine();
 
-            switch (opcion) {
+            switch (opcionPrincipal) {
                 case "1":
-                    menuClientes(scanner);
+                    boolean volver = false;
+                    while (!volver) {
+                        System.out.println("\n--- GESTIÓN DE CLIENTES ---");
+                        System.out.println("1. Agregar Cliente Natural");
+                        System.out.println("2. Agregar Cliente Jurídico");
+                        System.out.println("3. Buscar Cliente");
+                        System.out.println("4. Editar Cliente");
+                        System.out.println("5. Eliminar Cliente");
+                        System.out.println("6. Mostrar Todos los Clientes");
+                        System.out.println("7. Volver al Menú Principal");
+                        System.out.print("Seleccione una opción: ");
+                        String opcionCliente = sc.nextLine();
+
+                        switch (opcionCliente) {
+                            case "1":
+                                System.out.print("Dirección: ");
+                                String dirN = sc.nextLine();
+                                System.out.print("Teléfono: ");
+                                String telN = sc.nextLine();
+                                System.out.print("Correo: ");
+                                String mailN = sc.nextLine();
+                                System.out.print("Nombre: ");
+                                String nom = sc.nextLine();
+                                System.out.print("DNI: ");
+                                String dni = sc.nextLine();
+                                controlador.agregarCliNat(dirN, telN, mailN, nom, dni);
+                                break;
+
+                            case "2":
+                                System.out.print("Dirección: ");
+                                String dirJ = sc.nextLine();
+                                System.out.print("Teléfono: ");
+                                String telJ = sc.nextLine();
+                                System.out.print("Correo: ");
+                                String mailJ = sc.nextLine();
+                                System.out.print("Razón Social: ");
+                                String razon = sc.nextLine();
+                                System.out.print("RUC: ");
+                                String ruc = sc.nextLine();
+                                controlador.agregarCliJur(dirJ, telJ, mailJ, razon, ruc);
+                                break;
+
+                            case "3":
+                                System.out.print("Ingrese N° de Documento del cliente a buscar:(dni o ruc)");
+                                String idBuscar = sc.nextLine();
+                                Cliente encontrado = controlador.buscarCliente(idBuscar);
+                                if (encontrado != null) {
+                                    System.out.println(encontrado);
+                                }
+                                break;
+
+                            case "4":
+                                System.out.print("ID del cliente a editar: ");
+                                String idEditar = sc.nextLine();
+                                System.out.print("Nuevo Teléfono: ");
+                                String nuevoTel = sc.nextLine();
+                                System.out.print("Nuevo Correo: ");
+                                String nuevoCorreo = sc.nextLine();
+                                System.out.print("Nueva Dirección: ");
+                                String nuevaDir = sc.nextLine();
+                                controlador.editarCliente(idEditar, nuevoTel, nuevoCorreo, nuevaDir);
+                                break;
+
+                            case "5":
+                                System.out.print("ID del cliente a eliminar: ");
+                                String idEliminar = sc.nextLine();
+                                controlador.eliminarCliente(idEliminar);
+                                break;
+
+                            case "6":
+                                controlador.mostrarClientes();
+                                break;
+
+                            case "7":
+                                volver = true;
+                                break;
+
+                            default:
+                                System.out.println("Opción no válida. Intente nuevamente.");
+                        }
+                    }
                     break;
+
                 case "2":
-                    salir = true;
-                    System.out.println("Saliendo del sistema...");
+                    System.out.println("Funcionalidad aún no implementada.");
                     break;
-                default:
-                    System.out.println("Opción inválida.");
-            }
-        }
-        scanner.close();
-    }
 
-    // --------------------- MENÚ CLIENTES -------------------------
-    public static void menuClientes(Scanner scanner) {
-        boolean volver = false;
-
-        while (!volver) {
-            System.out.println("\n--- MENÚ DE CLIENTES ---");
-            System.out.println("1. Registrar Cliente");
-            System.out.println("2. Buscar Cliente");
-            System.out.println("3. Editar Cliente");
-            System.out.println("4. Eliminar Cliente");
-            System.out.println("5. Mostrar Clientes");
-            System.out.println("6. Volver al Menú Principal");
-            System.out.print("Seleccione una opción: ");
-            String opcion = scanner.nextLine();
-
-            switch (opcion) {
-                case "1":
-                    registrarCliente(scanner);
-                    break;
-                case "2":
-                    buscarCliente(scanner);
-                    break;
                 case "3":
-                    editarCliente(scanner);
+                    salir = true;
+                    System.out.println("Saliendo del programa...");
                     break;
-                case "4":
-                    eliminarCliente(scanner);
-                    break;
-                case "5":
-                    mostrarClientes();
-                    break;
-                case "6":
-                    volver = true;
-                    break;
+
                 default:
-                    System.out.println("Opción inválida.");
+                    System.out.println("Opción no válida. Intente nuevamente.");
             }
         }
-    }
 
-    // --------------------- MÉTODOS CLIENTE -------------------------
-
-    public static void registrarCliente(Scanner scanner) {
-        System.out.println("\n--- Registro de Cliente ---");
-        System.out.print("Tipo (1 = Natural, 2 = Jurídico): ");
-        String tipo = scanner.nextLine();
-
-        System.out.print("Dirección: ");
-        String direccion = scanner.nextLine();
-
-        System.out.print("Teléfono (9 dígitos): ");
-        String telefono = scanner.nextLine();
-
-        System.out.print("Correo: ");
-        String correo = scanner.nextLine();
-
-        if (tipo.equals("1")) {
-            System.out.print("Nombre completo: ");
-            String nombre = scanner.nextLine();
-            System.out.print("DNI (8 dígitos): ");
-            String dni = scanner.nextLine();
-
-            Cliente nuevo = new ClienteNatural(nombre, direccion, telefono, correo, dni, correo);
-            System.out.println("Cliente natural registrado: " + nuevo.getIdCliente());
-
-        } else if (tipo.equals("2")) {
-            System.out.print("Razón Social: ");
-            String razonSocial = scanner.nextLine();
-            System.out.print("RUC (11 dígitos): ");
-            String ruc = scanner.nextLine();
-
-            Cliente nuevo = new ClienteJuridico(razonSocial, ruc, direccion, telefono, correo);
-            System.out.println("Cliente jurídico registrado: " + nuevo.getIdCliente());
-
-        } else {
-            System.out.println("Tipo de cliente inválido.");
-        }
-    }
-
-    public static void buscarCliente(Scanner scanner) {
-        System.out.print("Ingrese DNI o RUC del cliente a buscar: ");
-        String doc = scanner.nextLine();
-        Cliente encontrado = buscarPorDocumento(doc);
-        if (encontrado != null) {
-            System.out.println("Cliente encontrado:");
-            System.out.println(encontrado);
-        } else {
-            System.out.println("No se encontró ningún cliente con ese documento.");
-        }
-    }
-
-    public static void editarCliente(Scanner scanner) {
-        System.out.print("Ingrese DNI o RUC del cliente a editar: ");
-        String doc = scanner.nextLine();
-        Cliente cliente = buscarPorDocumento(doc);
-        if (cliente != null) {
-            System.out.println("Editando cliente: " + cliente.getIdCliente());
-
-            System.out.print("Nuevo teléfono: ");
-            cliente.setTelefono(scanner.nextLine());
-
-            System.out.print("Nuevo correo: ");
-            cliente.setCorreo(scanner.nextLine());
-
-            System.out.print("Nueva dirección: ");
-            cliente.setDireccion(scanner.nextLine());
-
-            System.out.println("Cliente actualizado.");
-        } else {
-            System.out.println("Cliente no encontrado.");
-        }
-    }
-
-    public static void eliminarCliente(Scanner scanner) {
-        System.out.print("Ingrese DNI o RUC del cliente a eliminar: ");
-        String doc = scanner.nextLine();
-        Cliente cliente = buscarPorDocumento(doc);
-        if (cliente != null) {
-            ClienteController.mostrarClientes().remove(cliente);
-            System.out.println("Cliente eliminado.");
-        } else {
-            System.out.println("Cliente no encontrado.");
-        }
-    }
-
-    public static void mostrarClientes() {
-        ArrayList<Cliente> lista = Cliente.getListaClientesOriginal();
-        if (lista.isEmpty()) {
-            System.out.println("No hay clientes registrados.");
-        } else {
-            System.out.println("\n--- Lista de Clientes ---");
-            for (Cliente c : lista) {
-                System.out.println(c);
-            }
-        }
-    }
-
-    public static Cliente buscarPorDocumento(String doc) {
-        for (Cliente c : Cliente.getListaClientesOriginal()) {
-            if (c.getDocumento().equals(doc)) {
-                return c;
-            }
-        }
-        return null;
+        sc.close();
     }
 }
+

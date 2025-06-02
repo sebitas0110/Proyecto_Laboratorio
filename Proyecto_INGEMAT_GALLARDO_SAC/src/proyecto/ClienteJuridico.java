@@ -9,25 +9,22 @@ package proyecto;
  * @author Usuario
  */
 public class ClienteJuridico extends Cliente{
+   private String ruc;
     private String razonSocial;
-    private String ruc;
 
-    public ClienteJuridico(String razonSocial, String ruc, String direccion, String telefono, String correo) {
-        super(direccion, telefono, correo, idCliente);
-        this.razonSocial = razonSocial;
+    public ClienteJuridico(String direccion, String telefono, String correo, String razonSocial, String ruc) {
+        super(direccion, telefono, correo);
+        setRazonSocial(razonSocial);
+        setRuc(ruc);
+    }
+
+    public void setRuc(String ruc) {
+        if (ruc == null || !ruc.matches("\\d{11}")) {
+            throw new IllegalArgumentException("RUC debe tener exactamente 11 dígitos");
+        }
         this.ruc = ruc;
     }
-    
-    //GETTERS
-    public String getRuc() {
-        return ruc;
-    }
-    public String getRazonSocial() {
-        return razonSocial;
-    }
-    
-    
-    //SETTERS DE razonSocial y ruc 
+
     public void setRazonSocial(String razonSocial) {
         if (razonSocial == null || razonSocial.trim().isEmpty()) {
             throw new IllegalArgumentException("Razón social no puede estar vacía");
@@ -35,14 +32,6 @@ public class ClienteJuridico extends Cliente{
         this.razonSocial = razonSocial.trim();
     }
 
-    public void setRuc(String ruc) {
-         if (ruc == null || !ruc.matches("\\d{11}")) {
-            throw new IllegalArgumentException("RUC debe tener exactamente 11 dígitos numéricos");
-        }
-        this.ruc = ruc;
-    }
-    
-    //MÉTODOS POLIMÓRFICOS DE VALIDACIÓN
     @Override
     public boolean validarDocumento() {
         return ruc != null && ruc.matches("\\d{11}");
@@ -52,17 +41,19 @@ public class ClienteJuridico extends Cliente{
     public String getNombreCompleto() {
         return razonSocial;
     }
-
-    @Override
-    public String getDocumento() {
-        return ruc;
-    }
-
-    @Override
-    public String toString() {
-        return super.toString() + String.format(" | Tipo: Jurídico | Razón Social: %s | RUC: %s", razonSocial, ruc);
-    }
     
-    
+    @Override
+        public String getDocumento() {
+            return ruc;
+        }
+
+        public String getRazonSocial() { return razonSocial; }
+        public String getRuc() { return ruc; }
+
+        @Override
+        public String toString() {
+            return super.toString() + String.format(" | Tipo: Jurídico | Razón Social: %s | RUC: %s", razonSocial, ruc);
+        }
+
     
 }

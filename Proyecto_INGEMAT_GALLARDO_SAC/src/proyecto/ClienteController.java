@@ -13,68 +13,86 @@ public class ClienteController {
     private ArrayList<Cliente> listaClientes = new ArrayList<>();
     private int contadorClientes = 1;
 
-    // GENERAR ID ÚNICO
-    private String generarIdCliente() {
-        return String.format("CLI-%04d", contadorClientes++);
-    }
-
-    // CREAR Y AGREGAR CLIENTE NATURAL
-    public ClienteNatural agregarCliNat(String direccion, String telefono, String correo, String nombre, String dni) {
-        try {
-            String id = generarIdCliente();
-            ClienteNatural cn = new ClienteNatural(id, direccion, telefono, correo, nombre, dni);
-            listaClientes.add(cn);
-            return cn;
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Error al agregar cliente natural: " + ex.getMessage());
-            return null;
-        }
-    }
-
-    // CREAR Y AGREGAR CLIENTE JURIDICO
-    public ClienteJuridico agregarCliJur(String direccion, String telefono, String correo, String razonSocial, String ruc) {
-        try {
-            String id = generarIdCliente();
-            ClienteJuridico cj = new ClienteJuridico(id, direccion, telefono, correo, razonSocial, ruc);
-            listaClientes.add(cj);
-            return cj;
-        } catch (IllegalArgumentException ex) {
-            System.out.println("Error al agregar cliente jurídico: " + ex.getMessage());
-            return null;
-        }
-    }
-
-    // BUSCAR POR ID DE CLIENTE
-    public Cliente buscarCliente(String idCliente) {
+    // VALIDAR DOCUMENTO REPETIDO
+    private boolean documentoYaExiste(String documento) {
         for (Cliente c : listaClientes) {
-            if (c.getIdCliente().equalsIgnoreCase(idCliente)) {
-                return c;
-            }
-        }
-        System.out.println("Cliente no encontrado.");
-        return null;
-    }
-
-    // EDITAR CLIENTE
-    public boolean editarCliente(String idCliente, String nuevoTelefono, String nuevoCorreo, String nuevaDireccion) {
-        Cliente c = buscarCliente(idCliente);
-        if (c != null) {
-            try {
-                c.setTelefono(nuevoTelefono);
-                c.setCorreo(nuevoCorreo);
-                c.setDireccion(nuevaDireccion);
-                System.out.println("Cliente actualizado con éxito.");
+            if (c.getDocumento().equals(documento)) {
                 return true;
-            } catch (IllegalArgumentException ex) {
-                System.out.println("Error en edición: " + ex.getMessage());
             }
         }
         return false;
     }
+    
+    private String generarIdCliente() {
+        return String.format("CLI-%04d", contadorClientes++);
+    }
 
-    // ELIMINAR CLIENTE
-    public boolean eliminarCliente(String idCliente) {
-        Cliente c = buscarCliente(idCliente);
+    public ClienteNatural agregarCliNat(String direccion, String telefono, String correo, String nombre, String dni) {
+        if (documentoYaExiste(dni)) {
+          System.out.println("Ya existe un cliente con el DNI: " + dni);
+          return null;
+        }
+        try {
+        ClienteNatural cn = new ClienteNatural(direccion, telefono, correo, nombre, dni);
+        String id = generarIdCliente();  // Generar ID SOLO después de construcción exitosa
+        cn.setIdCliente(id);
+        listaClientes.add(cn);
+            System.out.println("Se agregó el cliente natural correctamente");
+        return cn;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error al crear cliente natural: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public ClienteJuridico agregarCliJur(String direccion, String telefono, String correo, String razonSocial, String ruc) {
+        if (documentoYaExiste(ruc)) {
+          System.out.println("Ya existe un cliente con el RUC: " + ruc);
+          return null;
+        }
+       try {
+        ClienteJuridico cj = new ClienteJuridico(direccion, telefono, correo, razonSocial, ruc);
+        String id = generarIdCliente();  // Generar ID solo si todo está bien
+        cj.setIdCliente(id);
+        listaClientes.add(cj);
+           System.out.println("Se agrego el cliente juridico correctamente");
+        return cj;
+        }catch (IllegalArgumentException e) {
+            System.out.println("Error al crear cliente jurídico: " + e.getMessage());
+            return null;
+        }
+    }
+
+    public Cliente buscarCliente(String documento) {
+        for (Cliente c : listaClientes) {
+            if (c.getDocumento().equalsIgnoreCase(documento)) {
+                return c;
+            }
+        }
+        System.out.println("Cliente con dni: " + documento + ", no encontrado");
+        return null;
+    }
+
+    public boolean editarCliente(String documento, String nuevoTelefono, String nuevoCorreo, String nuevaDireccion) {
+        Cliente c = buscarCliente(documento);
+        if (c != null) {
+            try {
+            if (nuevoTelefono != null && !nuevoTelefono.isBlank())
+                c.setTelefono(nuevoTelefono);
+            if (nuevoCorreo != null && !nuevoCorreo.isBlank())
+                c.setCorreo(nuevoCorreo);
+            if (nuevaDireccion != null && !nuevaDireccion.isBlank())
+                c.setDireccion(nuevaDireccion);
+            return true;
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+        }
+        }
+        return false;
+    }
+
+    public boolean eliminarCliente(String documento) {
+        Cliente c = buscarCliente(documento);
         if (c != null) {
             listaClientes.remove(c);
             System.out.println("Cliente eliminado con éxito.");
@@ -83,7 +101,6 @@ public class ClienteController {
         return false;
     }
 
-    // MOSTRAR TODOS LOS CLIENTES
     public void mostrarClientes() {
         if (listaClientes.isEmpty()) {
             System.out.println("No hay clientes registrados.");
