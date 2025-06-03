@@ -22,6 +22,7 @@ public abstract class Cliente {
         setCorreo(correo);
     }
 
+    //MÉTODOS POLIMÓRFICOS
     public abstract boolean validarDocumento();
     public abstract String getNombreCompleto();
     public abstract String getDocumento();
@@ -31,14 +32,14 @@ public abstract class Cliente {
         this.idCliente = idCliente;
     }
     public void setTelefono(String telefono) {
-        if (telefono == null || !telefono.matches("\\d{9}")) {
+        if (telefono == null || !telefono.matches("\\d{9}")) {//VALIDA QUE EL NÚMERO DE TELÉFONO TENGA 9 DÍGITOS OBLIGATORIAMENTE
             throw new IllegalArgumentException("El teléfono debe tener exactamente 9 dígitos");
         }
         this.telefono = telefono;
     }
 
     public void setCorreo(String correo) {
-        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";
+        String emailRegex = "^[A-Za-z0-9+_.-]+@(.+)$";//VALIDA QUE EL CORREO DEBA TENER EL '@' OBLIGATORIO ADEMÁS DEL DOMINIO CORRECTO
         if (correo == null || !Pattern.compile(emailRegex).matcher(correo).matches()) {
             throw new IllegalArgumentException("Correo electrónico no válido");
         }
@@ -61,7 +62,7 @@ public abstract class Cliente {
 
     //Constructor
     @Override
-    public String toString() {
+    public String toString() {//CONSTRUCTOR PARA IMPRESIÓN DE LOS DATOS DEL CLIENTE
         return String.format("ID: %s | Dirección: %s | Teléfono: %s | Email: %s",
                 idCliente, direccion, telefono, correo);
     }

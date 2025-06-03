@@ -19,14 +19,14 @@ public class ClienteNatural extends Cliente{
     }
 
     public void setDni(String dni) {
-        if (dni == null || !dni.matches("\\d{8}")) {
+        if (dni == null || !dni.matches("\\d{8}")) {//VALIDA QUE EL DNI TENGA 8 DÍGITOS OBLIGATORIAMENTE
             throw new IllegalArgumentException("DNI debe tener exactamente 8 dígitos");
         }
         this.dni = dni;
     }
 
     public void setNombre(String nombre) {
-        if (nombre == null || nombre.trim().isEmpty()) {
+        if (nombre == null || nombre.trim().isEmpty()) {//OBLIGA A QUE EL NOMBRE NO ESTÉ VACIO(NULL O NONE)
             throw new IllegalArgumentException("El nombre no puede estar vacío");
         }
         this.nombre = nombre.trim();
@@ -34,7 +34,7 @@ public class ClienteNatural extends Cliente{
 
     @Override
     public boolean validarDocumento() {
-        return dni != null && dni.matches("\\d{8}");
+        return dni != null && dni.matches("\\d{8}");//VALIDA QUE EL DOCUMENTO(DNI) TENGA 8 DIGITOS
     }
 
     @Override
@@ -51,7 +51,7 @@ public class ClienteNatural extends Cliente{
     public String getDni() { return dni; }
 
     @Override
-    public String toString() {
+    public String toString() {//IMPRESIÓN DE DATOS DEL CLIENTE NATURAL
         return super.toString() + String.format(" | Tipo: Natural | Nombre: %s | DNI: %s", nombre, dni);
     }
 }

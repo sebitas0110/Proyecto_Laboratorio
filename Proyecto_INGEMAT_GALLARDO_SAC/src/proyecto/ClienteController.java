@@ -27,6 +27,7 @@ public class ClienteController {
         return String.format("CLI-%04d", contadorClientes++);
     }
 
+    //Método para agregar a clientes naturales
     public ClienteNatural agregarCliNat(String direccion, String telefono, String correo, String nombre, String dni) {
         if (documentoYaExiste(dni)) {
           System.out.println("Ya existe un cliente con el DNI: " + dni);
@@ -45,6 +46,7 @@ public class ClienteController {
         }
     }
 
+    //Método para agregar a clientes jurídicos
     public ClienteJuridico agregarCliJur(String direccion, String telefono, String correo, String razonSocial, String ruc) {
         if (documentoYaExiste(ruc)) {
           System.out.println("Ya existe un cliente con el RUC: " + ruc);
@@ -63,16 +65,18 @@ public class ClienteController {
         }
     }
 
+    //Método para buscar al cliente mediante el número de documento
     public Cliente buscarCliente(String documento) {
         for (Cliente c : listaClientes) {
             if (c.getDocumento().equalsIgnoreCase(documento)) {
                 return c;
             }
         }
-        System.out.println("Cliente con dni: " + documento + ", no encontrado");
+        System.out.println("Cliente con n° de documento: " + documento + ", no encontrado");
         return null;
     }
 
+    //Método para modificar al cliente mediante número de documento(dni o ruc)
     public boolean editarCliente(String documento, String nuevoTelefono, String nuevoCorreo, String nuevaDireccion) {
         Cliente c = buscarCliente(documento);
         if (c != null) {
@@ -91,6 +95,7 @@ public class ClienteController {
         return false;
     }
 
+    //eliminar al cliente encontrado por número de documento(dni o ruc)
     public boolean eliminarCliente(String documento) {
         Cliente c = buscarCliente(documento);
         if (c != null) {
@@ -101,6 +106,7 @@ public class ClienteController {
         return false;
     }
 
+    //Muestra a todos los clientes
     public void mostrarClientes() {
         if (listaClientes.isEmpty()) {
             System.out.println("No hay clientes registrados.");

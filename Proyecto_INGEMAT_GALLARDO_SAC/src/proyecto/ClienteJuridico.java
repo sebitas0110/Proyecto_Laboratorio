@@ -19,13 +19,13 @@ public class ClienteJuridico extends Cliente{
     }
 
     public void setRuc(String ruc) {
-        if (ruc == null || !ruc.matches("\\d{11}")) {
+        if (ruc == null || !ruc.matches("\\d{11}")) {//VALIDA QUE EL DOCUMENTO(RUC) TENGA 11 DIGITOS OBLIGATORIAMENTE
             throw new IllegalArgumentException("RUC debe tener exactamente 11 dígitos");
         }
         this.ruc = ruc;
     }
 
-    public void setRazonSocial(String razonSocial) {
+    public void setRazonSocial(String razonSocial) {//VALIDA QUE LA RAZÓN SOCIAL NO ESTE VACÍA
         if (razonSocial == null || razonSocial.trim().isEmpty()) {
             throw new IllegalArgumentException("Razón social no puede estar vacía");
         }
@@ -51,7 +51,7 @@ public class ClienteJuridico extends Cliente{
         public String getRuc() { return ruc; }
 
         @Override
-        public String toString() {
+        public String toString() {//CONSTRUCTOR DEL CLIENTE JURIDICO
             return super.toString() + String.format(" | Tipo: Jurídico | Razón Social: %s | RUC: %s", razonSocial, ruc);
         }
 
