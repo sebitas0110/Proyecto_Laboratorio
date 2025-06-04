@@ -14,7 +14,7 @@ public abstract class Cliente {
     private String telefono;
     private String correo;
     private String idCliente;
-
+    
     public Cliente(String direccion, String telefono, String correo) {
         this.idCliente = idCliente;
         setDireccion(direccion);
@@ -23,7 +23,7 @@ public abstract class Cliente {
     }
 
     //MÉTODOS POLIMÓRFICOS
-    public abstract boolean validarDocumento();
+    //public abstract boolean validarDocumento();
     public abstract String getNombreCompleto();
     public abstract String getDocumento();
 

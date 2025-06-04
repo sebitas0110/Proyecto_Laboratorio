@@ -2,8 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package proyecto;
-
+package proyecto; 
 /**
  *
  * @author Usuario
@@ -32,28 +31,26 @@ public class ClienteJuridico extends Cliente{
         this.razonSocial = razonSocial.trim();
     }
 
-    @Override
-    public boolean validarDocumento() {
-        return ruc != null && ruc.matches("\\d{11}");
-    }
+    //@Override
+    //public boolean validarDocumento() {
+    //    return ruc != null && ruc.matches("\\d{11}");
+    //}
 
     @Override
     public String getNombreCompleto() {
         return razonSocial;
     }
-    
+
     @Override
-        public String getDocumento() {
-            return ruc;
-        }
+    public String getDocumento() {
+        return ruc;
+    }
 
-        public String getRazonSocial() { return razonSocial; }
-        public String getRuc() { return ruc; }
+    public String getRazonSocial() { return razonSocial; }
+    public String getRuc() { return ruc; }
 
-        @Override
-        public String toString() {//CONSTRUCTOR DEL CLIENTE JURIDICO
-            return super.toString() + String.format(" | Tipo: Jurídico | Razón Social: %s | RUC: %s", razonSocial, ruc);
-        }
-
-    
+    @Override
+    public String toString() {//CONSTRUCTOR DEL CLIENTE JURIDICO
+        return super.toString() + String.format(" | Tipo: Jurídico | Razón Social: %s | RUC: %s", razonSocial, ruc);
+    }
 }

@@ -32,10 +32,10 @@ public class ClienteNatural extends Cliente{
         this.nombre = nombre.trim();
     }
 
-    @Override
-    public boolean validarDocumento() {
-        return dni != null && dni.matches("\\d{8}");//VALIDA QUE EL DOCUMENTO(DNI) TENGA 8 DIGITOS
-    }
+    //@Override
+    //public boolean validarDocumento() {
+    //    return dni != null && dni.matches("\\d{8}");//VALIDA QUE EL DOCUMENTO(DNI) TENGA 8 DIGITOS
+    //}
 
     @Override
     public String getNombreCompleto() {
