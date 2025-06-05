@@ -48,13 +48,13 @@ public class ClienteController {
 
     //Método para agregar a clientes jurídicos
     public ClienteJuridico agregarCliJur(String direccion, String telefono, String correo, String razonSocial, 
-                                                String ruc, String representanteLegal, String documentoRepLeg) {
+                                                String ruc, String representanteLegal, String documentoRepLeg, int tipoEmpresa) {
         if (documentoYaExiste(ruc)) {
           System.out.println("Ya existe un cliente con el RUC: " + ruc);
           return null;
         }
        try {
-        ClienteJuridico cj = new ClienteJuridico(direccion, telefono, correo, razonSocial, ruc, representanteLegal, documentoRepLeg);
+        ClienteJuridico cj = new ClienteJuridico(direccion, telefono, correo, razonSocial, ruc, representanteLegal, documentoRepLeg, tipoEmpresa);
         String id = generarIdCliente();  // Generar ID solo si todo está bien
         cj.setIdCliente(id);
         listaClientes.add(cj);
@@ -95,15 +95,26 @@ public class ClienteController {
             if (c.getTipoCliente() == Cliente.TIPO_JURIDICO && c instanceof ClienteJuridico) {
                 ClienteJuridico cj = (ClienteJuridico) c;
 
-                if (nuevoRepresentanteLegal != null && !nuevoRepresentanteLegal.isBlank()) {
+                if ((nuevoRepresentanteLegal != null && !nuevoRepresentanteLegal.isBlank()) ||
+                    (nuevoDocRepLeg != null && !nuevoDocRepLeg.isBlank())) {
+                    
                     if (documentoJustificante) {
-                        cj.setRepresentanteLegal(nuevoRepresentanteLegal);
-                        System.out.println("Representante legal actualizado correctamente.");
+                        // Actualizar representante legal si se proporciona
+                        if (nuevoRepresentanteLegal != null && !nuevoRepresentanteLegal.isBlank()) {
+                            cj.setRepresentanteLegal(nuevoRepresentanteLegal);
+                        }
+                        
+                        // Actualizar documento del representante legal si se proporciona
+                        if (nuevoDocRepLeg != null && !nuevoDocRepLeg.isBlank()) {
+                            cj.setDocumentoRepLeg(nuevoDocRepLeg);
+                        }
+                        
+                        System.out.println("Datos del representante legal actualizados correctamente.");
                     } else {
                         System.out.println("No se puede actualizar el representante legal sin documento justificante.");
+                        return false;
                     }
                 }
-                
             }
 
             return true;

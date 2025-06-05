@@ -8,19 +8,29 @@ package proyecto;
  * @author Usuario
  */
 public class ClienteJuridico extends Cliente{
+    
+    //CONSTANTES PARA DEFINIR EL TUPO DE EMPRESA(NO VARIAN DENTRO DEL CODIGO)
+    public static final int EMPRESA_PRIVADA = 1;
+    public static final int EMPRESA_GUBERNAMENTAL = 2;
+    
     private String ruc;
     private String razonSocial;
     private String representanteLegal;
     private String documentoRepLeg;
+    private int tipoEmpresa;
 
-    public ClienteJuridico(String direccion, String telefono, String correo, String razonSocial, String ruc, String representanteLegal, String documentoRepLeg) {
+    public ClienteJuridico(String direccion, String telefono, String correo, 
+            String razonSocial, String ruc, String representanteLegal, 
+            String documentoRepLeg, int tipoEmpresa) {
         super(direccion, telefono, correo, TIPO_JURIDICO);
         setRazonSocial(razonSocial);
         setRuc(ruc);
         setRepresentanteLegal(representanteLegal);
         setDocumentoRepLeg(documentoRepLeg);
+        setTipoEmpresa(tipoEmpresa);
     }
 
+    //SETTERS
     public void setRuc(String ruc) {
         if (ruc == null || !ruc.matches("\\d{11}")) {//VALIDA QUE EL DOCUMENTO(RUC) TENGA 11 DIGITOS OBLIGATORIAMENTE
             throw new IllegalArgumentException("RUC debe tener exactamente 11 dígitos");
@@ -48,8 +58,16 @@ public class ClienteJuridico extends Cliente{
         }
         this.documentoRepLeg = documentoRepLeg;
     }
- 
 
+    public void setTipoEmpresa(int tipoEmpresa) {
+        if (tipoEmpresa != EMPRESA_PRIVADA && tipoEmpresa != EMPRESA_GUBERNAMENTAL) {
+            throw new IllegalArgumentException("Tipo de empresa no válido");
+        }
+        this.tipoEmpresa = tipoEmpresa;
+    }
+    
+    
+    //GETTERS
     @Override
     public String getNombreCompleto() {
         return razonSocial;
@@ -70,8 +88,20 @@ public class ClienteJuridico extends Cliente{
         return representanteLegal;
     }
 
+    public int getTipoEmpresa() {
+        return tipoEmpresa;
+    }
+    
+    //MÉTODO DE IMPRESION DEL TIPO DE EMPRESA A TEXTO: PRIVADA O GUBERNAMENTAL
+    public String getTipoEmpresaTexto(){
+        return tipoEmpresa == EMPRESA_PRIVADA ? "Privada" : "Gubernamental";
+    }
+    
+    //MÉTODO DE IMPRESIÓN DE CLIENTE
     @Override
     public String toString() {//CONSTRUCTOR DEL CLIENTE JURIDICO
-        return super.toString() + String.format("\n | Tipo: Jurídico | Razón Social: %s | RUC: %s | Representante Legal: %s", razonSocial, ruc, representanteLegal);
+        return super.toString() + String.format("\n | Tipo: Jurídico "
+                + "| Razón Social: %s | RUC: %s | Representante Legal: %s | RR.LL. Documento: %s | Tipo de Empresa: %s", 
+                razonSocial, ruc, representanteLegal, documentoRepLeg, getTipoEmpresaTexto());
     }
 }

@@ -10,6 +10,7 @@ import java.util.regex.Pattern;//sirve para trabajar con expresiones regulares
  * @author Usuario
  */
 public abstract class Cliente {
+    //CONSTANTES PARA DEFINIR EL TIPO DE CLIENTE(NO VARÍAN DENTRO DEL CODIGO)
     public static final int TIPO_NATURAL = 1;
     public static final int TIPO_JURIDICO = 2;
     

@@ -69,7 +69,16 @@ public class Tester {
                                 String repLeg = sc.nextLine();
                                 System.out.print("Documento del RR.LL.: ");
                                 String repDoc = sc.nextLine();
-                                controlador.agregarCliJur(dirJ, telJ, mailJ, razon, ruc, repLeg, repDoc);
+                                System.out.print("Tipo de empresa (privada/gubernamental): ");
+                                String tipoEmpresaTexto = sc.nextLine().trim().toLowerCase();
+
+                                while (!tipoEmpresaTexto.equals("privada") && !tipoEmpresaTexto.equals("gubernamental")) {
+                                    System.out.print("Tipo inválido. Ingrese 'privada' o 'gubernamental': ");
+                                    tipoEmpresaTexto = sc.nextLine().trim().toLowerCase();
+                                }
+
+                                int tipoEmpresa = tipoEmpresaTexto.equals("privada") ? ClienteJuridico.EMPRESA_PRIVADA : ClienteJuridico.EMPRESA_GUBERNAMENTAL;
+                                controlador.agregarCliJur(dirJ, telJ, mailJ, razon, ruc, repLeg, repDoc, tipoEmpresa);
                                 break;
 
                             case "3":
