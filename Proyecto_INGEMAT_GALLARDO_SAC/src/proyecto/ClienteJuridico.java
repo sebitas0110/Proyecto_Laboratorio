@@ -8,13 +8,17 @@ package proyecto;
  * @author Usuario
  */
 public class ClienteJuridico extends Cliente{
-   private String ruc;
+    private String ruc;
     private String razonSocial;
+    private String representanteLegal;
+    private String documentoRepLeg;
 
-    public ClienteJuridico(String direccion, String telefono, String correo, String razonSocial, String ruc) {
-        super(direccion, telefono, correo);
+    public ClienteJuridico(String direccion, String telefono, String correo, String razonSocial, String ruc, String representanteLegal, String documentoRepLeg) {
+        super(direccion, telefono, correo, TIPO_JURIDICO);
         setRazonSocial(razonSocial);
         setRuc(ruc);
+        setRepresentanteLegal(representanteLegal);
+        setDocumentoRepLeg(documentoRepLeg);
     }
 
     public void setRuc(String ruc) {
@@ -31,10 +35,20 @@ public class ClienteJuridico extends Cliente{
         this.razonSocial = razonSocial.trim();
     }
 
-    //@Override
-    //public boolean validarDocumento() {
-    //    return ruc != null && ruc.matches("\\d{11}");
-    //}
+    public void setRepresentanteLegal(String representanteLegal) {
+        if(representanteLegal == null || representanteLegal.trim().isEmpty()){
+            throw new IllegalArgumentException("El representante legal no puede estar vacío");
+        }
+        this.representanteLegal = representanteLegal;
+    }
+
+    public void setDocumentoRepLeg(String documentoRepLeg) {
+        if(documentoRepLeg == null || documentoRepLeg.trim().isEmpty()){
+            throw new IllegalArgumentException("El representante legal no puede estar vacío");
+        }
+        this.documentoRepLeg = documentoRepLeg;
+    }
+ 
 
     @Override
     public String getNombreCompleto() {
@@ -46,11 +60,18 @@ public class ClienteJuridico extends Cliente{
         return ruc;
     }
 
-    public String getRazonSocial() { return razonSocial; }
-    public String getRuc() { return ruc; }
+    public String getRazonSocial() { 
+        return razonSocial; 
+    }
+    public String getRuc() { 
+        return ruc; 
+    }
+    public String getRepresentanteLegal() {
+        return representanteLegal;
+    }
 
     @Override
     public String toString() {//CONSTRUCTOR DEL CLIENTE JURIDICO
-        return super.toString() + String.format(" | Tipo: Jurídico | Razón Social: %s | RUC: %s", razonSocial, ruc);
+        return super.toString() + String.format("\n | Tipo: Jurídico | Razón Social: %s | RUC: %s | Representante Legal: %s", razonSocial, ruc, representanteLegal);
     }
 }

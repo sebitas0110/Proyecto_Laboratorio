@@ -10,24 +10,35 @@ import java.util.regex.Pattern;//sirve para trabajar con expresiones regulares
  * @author Usuario
  */
 public abstract class Cliente {
+    public static final int TIPO_NATURAL = 1;
+    public static final int TIPO_JURIDICO = 2;
+    
     private String direccion;
     private String telefono;
     private String correo;
     private String idCliente;
+    private int tipoCliente;
     
-    public Cliente(String direccion, String telefono, String correo) {
-        this.idCliente = idCliente;
+    public Cliente(String direccion, String telefono, String correo, int tipoCliente) {
+        setIdCliente(idCliente);
         setDireccion(direccion);
         setTelefono(telefono);
         setCorreo(correo);
+        setTipoCliente(tipoCliente);
     }
 
     //MÉTODOS POLIMÓRFICOS
-    //public abstract boolean validarDocumento();
     public abstract String getNombreCompleto();
     public abstract String getDocumento();
 
     //SETTERS
+    public void setTipoCliente(int tipoCliente) {//VALIDACIÓN DE TIPO DE CLIENTE(NATURAL O JURIDICO)
+        if (tipoCliente != TIPO_NATURAL && tipoCliente != TIPO_JURIDICO) {
+            throw new IllegalArgumentException("Tipo de cliente inválido");
+        }
+        this.tipoCliente = tipoCliente;
+    }
+
     public void setIdCliente(String idCliente) {
         this.idCliente = idCliente;
     }
@@ -46,7 +57,7 @@ public abstract class Cliente {
         this.correo = correo;
     }
 
-    public void setDireccion(String direccion) {
+    public void setDireccion(String direccion) {//VALIDA QUE LA DIRECCION NO PUEDA SER NULL Y SEA OBLIGATORIA DE PONER
         if (direccion == null || direccion.trim().isEmpty()) {
             throw new IllegalArgumentException("La dirección no puede estar vacía");
         }
@@ -55,15 +66,27 @@ public abstract class Cliente {
     
     
     //GETTERS
-    public String getCorreo() { return correo; }
-    public String getDireccion() { return direccion; }
-    public String getIdCliente() { return idCliente; }
-    public String getTelefono() { return telefono; }
+    public String getCorreo() { 
+        return correo; 
+    }
+    public String getDireccion() { 
+        return direccion; 
+    }
+    public String getIdCliente() { 
+        return idCliente; 
+    }
+    public String getTelefono() { 
+        return telefono; 
+    }
+
+    public int getTipoCliente() {
+        return tipoCliente;
+    }
 
     //Constructor
     @Override
     public String toString() {//CONSTRUCTOR PARA IMPRESIÓN DE LOS DATOS DEL CLIENTE
-        return String.format("ID: %s | Dirección: %s | Teléfono: %s | Email: %s",
+        return String.format("- ID: %s | Dirección: %s | Teléfono: %s | Email: %s",
                 idCliente, direccion, telefono, correo);
     }
 }

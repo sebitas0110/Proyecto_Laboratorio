@@ -13,7 +13,7 @@ public class ClienteNatural extends Cliente{
     private String dni;
 
     public ClienteNatural(String direccion, String telefono, String correo, String nombre, String dni) {
-        super(direccion, telefono, correo);
+        super(direccion, telefono, correo, TIPO_NATURAL);
         setNombre(nombre);
         setDni(dni);
     }
@@ -32,11 +32,7 @@ public class ClienteNatural extends Cliente{
         this.nombre = nombre.trim();
     }
 
-    //@Override
-    //public boolean validarDocumento() {
-    //    return dni != null && dni.matches("\\d{8}");//VALIDA QUE EL DOCUMENTO(DNI) TENGA 8 DIGITOS
-    //}
-
+    
     @Override
     public String getNombreCompleto() {
         return nombre;
@@ -47,8 +43,12 @@ public class ClienteNatural extends Cliente{
         return dni;
     }
 
-    public String getNombre() { return nombre; }
-    public String getDni() { return dni; }
+    public String getNombre() { 
+        return nombre; 
+    }
+    public String getDni() { 
+        return dni; 
+    }
 
     @Override
     public String toString() {//IMPRESIÓN DE DATOS DEL CLIENTE NATURAL

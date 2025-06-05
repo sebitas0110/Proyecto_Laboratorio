@@ -47,13 +47,14 @@ public class ClienteController {
     }
 
     //Método para agregar a clientes jurídicos
-    public ClienteJuridico agregarCliJur(String direccion, String telefono, String correo, String razonSocial, String ruc) {
+    public ClienteJuridico agregarCliJur(String direccion, String telefono, String correo, String razonSocial, 
+                                                String ruc, String representanteLegal, String documentoRepLeg) {
         if (documentoYaExiste(ruc)) {
           System.out.println("Ya existe un cliente con el RUC: " + ruc);
           return null;
         }
        try {
-        ClienteJuridico cj = new ClienteJuridico(direccion, telefono, correo, razonSocial, ruc);
+        ClienteJuridico cj = new ClienteJuridico(direccion, telefono, correo, razonSocial, ruc, representanteLegal, documentoRepLeg);
         String id = generarIdCliente();  // Generar ID solo si todo está bien
         cj.setIdCliente(id);
         listaClientes.add(cj);
@@ -77,23 +78,43 @@ public class ClienteController {
     }
 
     //Método para modificar al cliente mediante número de documento(dni o ruc)
-    public boolean editarCliente(String documento, String nuevoTelefono, String nuevoCorreo, String nuevaDireccion) {
-        Cliente c = buscarCliente(documento);
-        if (c != null) {
-            try {
+    public boolean editarCliente(String documento, String nuevoTelefono, String nuevoCorreo, String nuevaDireccion, 
+                             String nuevoRepresentanteLegal, String nuevoDocRepLeg,boolean documentoJustificante) {
+    Cliente c = buscarCliente(documento);
+    
+    if (c != null) {
+        try {
             if (nuevoTelefono != null && !nuevoTelefono.isBlank())
                 c.setTelefono(nuevoTelefono);
             if (nuevoCorreo != null && !nuevoCorreo.isBlank())
                 c.setCorreo(nuevoCorreo);
             if (nuevaDireccion != null && !nuevaDireccion.isBlank())
                 c.setDireccion(nuevaDireccion);
+
+            // Solo si es un cliente jurídico
+            if (c.getTipoCliente() == Cliente.TIPO_JURIDICO && c instanceof ClienteJuridico) {
+                ClienteJuridico cj = (ClienteJuridico) c;
+
+                if (nuevoRepresentanteLegal != null && !nuevoRepresentanteLegal.isBlank()) {
+                    if (documentoJustificante) {
+                        cj.setRepresentanteLegal(nuevoRepresentanteLegal);
+                        System.out.println("Representante legal actualizado correctamente.");
+                    } else {
+                        System.out.println("No se puede actualizar el representante legal sin documento justificante.");
+                    }
+                }
+                
+            }
+
             return true;
+
         } catch (IllegalArgumentException e) {
-            System.out.println("Error: " + e.getMessage());
+            System.out.println("Error al editar cliente: " + e.getMessage());
         }
-        }
-        return false;
     }
+
+    return false;
+}
 
     //eliminar al cliente encontrado por número de documento(dni o ruc)
     public boolean eliminarCliente(String documento) {

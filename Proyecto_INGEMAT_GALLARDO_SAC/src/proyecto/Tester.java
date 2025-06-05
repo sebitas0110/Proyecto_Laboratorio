@@ -65,7 +65,11 @@ public class Tester {
                                 String razon = sc.nextLine();
                                 System.out.print("RUC: ");
                                 String ruc = sc.nextLine();
-                                controlador.agregarCliJur(dirJ, telJ, mailJ, razon, ruc);
+                                System.out.print("Representante legal: ");
+                                String repLeg = sc.nextLine();
+                                System.out.print("Documento del RR.LL.: ");
+                                String repDoc = sc.nextLine();
+                                controlador.agregarCliJur(dirJ, telJ, mailJ, razon, ruc, repLeg, repDoc);
                                 break;
 
                             case "3":
@@ -78,15 +82,51 @@ public class Tester {
                                 break;
 
                             case "4":
-                                System.out.print("ID del cliente a editar: ");
-                                String idEditar = sc.nextLine();
-                                System.out.print("Nuevo Teléfono: ");
+                                System.out.print("Ingrese el documento (DNI o RUC) del cliente a editar: ");
+                                String docEditar = sc.nextLine();
+                                System.out.print("Nuevo Teléfono (dejar vacío para no modificar): ");
                                 String nuevoTel = sc.nextLine();
-                                System.out.print("Nuevo Correo: ");
+                                System.out.print("Nuevo Correo (dejar vacío para no modificar): ");
                                 String nuevoCorreo = sc.nextLine();
-                                System.out.print("Nueva Dirección: ");
+                                System.out.print("Nueva Dirección (dejar vacío para no modificar): ");
                                 String nuevaDir = sc.nextLine();
-                                controlador.editarCliente(idEditar, nuevoTel, nuevoCorreo, nuevaDir);
+                                
+                                String nuevoRepLeg = null;
+                                String nuevoDocRepLeg = null;
+                                boolean documentoJustificante = false;
+
+                                Cliente clienteAEditar = controlador.buscarCliente(docEditar);
+
+                                if (clienteAEditar != null && clienteAEditar.getTipoCliente() == Cliente.TIPO_JURIDICO) {
+                                    System.out.print("¿Desea modificar el representante legal? (si/no): ");
+                                    String respuesta = sc.nextLine().trim().toLowerCase();
+                                    if (respuesta.equals("si")) {
+                                        System.out.print("Ingrese el nuevo nombre del representante legal: ");
+                                        nuevoRepLeg = sc.nextLine();
+                                        System.out.print("Ingrese el nuevo documento del RR.LL.:");
+                                        nuevoDocRepLeg = sc.nextLine();
+                                        System.out.print("¿Cuenta con documento justificante? (si/no): ");
+                                        String docResp = sc.nextLine().trim().toLowerCase();
+                                        documentoJustificante = docResp.equals("si");
+                                    }
+                                }
+
+                                boolean exito = controlador.editarCliente(
+                                    docEditar, 
+                                    nuevoTel, 
+                                    nuevoCorreo, 
+                                    nuevaDir, 
+                                    nuevoRepLeg,
+                                    nuevoDocRepLeg,
+                                    documentoJustificante
+                                );
+
+                                if (exito) {
+                                    System.out.println("Cliente editado exitosamente.");
+                                } else {
+                                    System.out.println("No se pudo editar el cliente.");
+                                }
+
                                 break;
 
                             case "5":
