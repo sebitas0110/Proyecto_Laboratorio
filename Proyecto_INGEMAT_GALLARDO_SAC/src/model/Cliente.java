@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package proyecto;
+package model;
 import java.util.regex.Pattern;//sirve para trabajar con expresiones regulares
 //en este caso, la validación obl   igatoria de e-mail correctamente escrito.
 /**
