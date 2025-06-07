@@ -41,7 +41,7 @@ public class ClienteController {
         String id = generarIdCliente();  // Generar ID SOLO después de construcción exitosa
         cn.setIdCliente(id);
         listaClientes.add(cn);
-            System.out.println("Se agregó el cliente natural correctamente");
+            System.out.println("Se agrego el cliente natural correctamente");
         return cn;
         } catch (IllegalArgumentException e) {
             System.out.println("Error al crear cliente natural: " + e.getMessage());
@@ -51,13 +51,16 @@ public class ClienteController {
 
     //Método para agregar a clientes jurídicos
     public ClienteJuridico agregarCliJur(String direccion, String telefono, String correo, String razonSocial, 
-                                                String ruc, String representanteLegal, String documentoRepLeg, int tipoEmpresa) {
+                                                String ruc, String propietario, String docPropietario, String representanteLegal, 
+                                                String documentoRepLeg, int tipoEmpresa) {
         if (documentoYaExiste(ruc)) {
           System.out.println("Ya existe un cliente con el RUC: " + ruc);
           return null;
         }
        try {
-        ClienteJuridico cj = new ClienteJuridico(direccion, telefono, correo, razonSocial, ruc, representanteLegal, documentoRepLeg, tipoEmpresa);
+        ClienteJuridico cj = new ClienteJuridico(direccion, telefono, correo, 
+                razonSocial, ruc, propietario, docPropietario, representanteLegal, 
+                documentoRepLeg, tipoEmpresa);
         String id = generarIdCliente();  // Generar ID solo si todo está bien
         cj.setIdCliente(id);
         listaClientes.add(cj);

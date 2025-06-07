@@ -5,6 +5,9 @@
 package Main;
 import controller.ClienteController;
 import view.ClienteView;
+import model.Administrador;
+import controller.AdministradorController;
+import view.AdministradorView;
 /**
  *
  * @author Usuario
@@ -12,10 +15,24 @@ import view.ClienteView;
 public class Tester {
 
     public static void main(String[] args) {
-        ClienteController controlador = new ClienteController();
-        ClienteView vista = new ClienteView(controlador);
+        Administrador adminDefault = new Administrador();
+        AdministradorController controller = new AdministradorController(adminDefault);
+        AdministradorView view = new AdministradorView(controller);
+
+        boolean accesoConcedido = view.mostrarLogin();
+
+        if (accesoConcedido) {
+            // Aquí va el resto de tu programa
+            System.out.println("Bienvenido al sistema, continúa la ejecución...");
+            //CLIENTE
+            ClienteController controlador = new ClienteController();
+            ClienteView vista = new ClienteView(controlador);
         
-         vista.mostrarMenuPrincipal();
+            vista.mostrarMenuPrincipal();
+        } else {
+            // Terminar ejecución (opcional: System.exit)
+            System.out.println("Cerrando aplicación...");
+        }
     }
 }
 

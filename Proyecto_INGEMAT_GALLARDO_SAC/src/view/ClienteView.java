@@ -119,6 +119,10 @@ public class ClienteView {
         String razon = sc.nextLine();
         System.out.print("RUC: ");
         String ruc = sc.nextLine();
+        System.out.print("Propietario: ");
+        String propietario = sc.nextLine();
+        System.out.print("Documento del propietario: ");
+        String docProp = sc.nextLine();
         System.out.print("Representante legal: ");
         String repLeg = sc.nextLine();
         System.out.print("Documento del RR.LL.: ");
@@ -134,7 +138,7 @@ public class ClienteView {
         int tipoEmpresa = tipoEmpresaTexto.equals("privada") ? 
             ClienteJuridico.EMPRESA_PRIVADA : ClienteJuridico.EMPRESA_GUBERNAMENTAL;
             
-        controlador.agregarCliJur(dirJ, telJ, mailJ, razon, ruc, repLeg, repDoc, tipoEmpresa);
+        controlador.agregarCliJur(dirJ, telJ, mailJ, razon, ruc, propietario, docProp,repLeg, repDoc, tipoEmpresa);
     }
 
     private void buscarCliente() {
