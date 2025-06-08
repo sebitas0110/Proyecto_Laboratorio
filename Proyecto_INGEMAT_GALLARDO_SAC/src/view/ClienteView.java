@@ -189,7 +189,7 @@ public class ClienteView {
             docEditar, 
             nuevoTel, 
             nuevoCorreo, 
-            ubicontrolador.editarUbicacion(get), 
+            ubicontrolador.editarUbicacion(), 
             nuevoRepLeg,
             nuevoDocRepLeg,
             documentoJustificante
