@@ -1,4 +1,4 @@
-/*
+    /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
@@ -9,29 +9,24 @@ package model;
  * @author Usuario
  */
 public class Departamento {
-    private int id;
-    private String nombre;
+    private String idDepartamento;
+    private String nombreDepartamento;
 
-    public Departamento(int id, String nombre) {
-        this.id = id;
-        this.nombre = nombre;
-    }
-
-    public void setId(int id) {
-        this.id = id;
+    public Departamento(String nombreDepartamento, String idDepartamento) {
+        this.idDepartamento = idDepartamento;
+        this.nombreDepartamento = nombreDepartamento;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String getNombreDepartamento() {
+        return nombreDepartamento;
     }
 
-    public int getId() {
-        return id;
+    public void setNombreDepartamento(String nombreDepartamento) {
+        this.nombreDepartamento = nombreDepartamento;
     }
-    
-    public String getNombre() {
-        return nombre;
+
+    @Override
+    public String toString() {
+        return nombreDepartamento;
     }
-    
-    
 }

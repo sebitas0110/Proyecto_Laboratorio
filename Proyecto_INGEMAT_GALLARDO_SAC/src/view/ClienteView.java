@@ -5,9 +5,11 @@
  */
 package view;
 import controller.ClienteController;
+import controller.UbicacionController;
 import model.Cliente;
 import model.ClienteJuridico;
 import java.util.Scanner;
+import model.Ubicacion;
 /**
  *
  * @author Usuario
@@ -15,10 +17,12 @@ import java.util.Scanner;
 public class ClienteView {
     private Scanner sc;
     private ClienteController controlador;
+    private UbicacionController ubicontrolador;
     
-    public ClienteView(ClienteController controlador) {
+    public ClienteView(ClienteController controlador, UbicacionController ubicontrolador) {
         this.sc = new Scanner(System.in);
         this.controlador = controlador;
+        this.ubicontrolador=ubicontrolador;
     }
     public void mostrarMenuPrincipal() {
         boolean salir = false;
@@ -94,8 +98,8 @@ public class ClienteView {
     }
 
     private void agregarClienteNatural() {
-        System.out.print("Dirección: ");
-        String dirN = sc.nextLine();
+        System.out.print("Ingresa los datos de su dirección: ");
+        Ubicacion ubicacion = ubicontrolador.crearUbicacion();
         System.out.print("Teléfono: ");
         String telN = sc.nextLine();
         System.out.print("Correo: ");
@@ -105,12 +109,12 @@ public class ClienteView {
         System.out.print("DNI: ");
         String dni = sc.nextLine();
         
-        controlador.agregarCliNat(dirN, telN, mailN, nom, dni);
+        controlador.agregarCliNat(ubicacion, telN, mailN, nom, dni);
     }
 
     private void agregarClienteJuridico() {
-        System.out.print("Dirección: ");
-        String dirJ = sc.nextLine();
+        System.out.print("Ingresa los datos de su dirección: ");
+        Ubicacion ubicacion = ubicontrolador.crearUbicacion();
         System.out.print("Teléfono: ");
         String telJ = sc.nextLine();
         System.out.print("Correo: ");
@@ -138,7 +142,7 @@ public class ClienteView {
         int tipoEmpresa = tipoEmpresaTexto.equals("privada") ? 
             ClienteJuridico.EMPRESA_PRIVADA : ClienteJuridico.EMPRESA_GUBERNAMENTAL;
             
-        controlador.agregarCliJur(dirJ, telJ, mailJ, razon, ruc, propietario, docProp,repLeg, repDoc, tipoEmpresa);
+        controlador.agregarCliJur(ubicacion, telJ, mailJ, razon, ruc, propietario, docProp,repLeg, repDoc, tipoEmpresa);
     }
 
     private void buscarCliente() {
@@ -157,8 +161,9 @@ public class ClienteView {
         String nuevoTel = sc.nextLine();
         System.out.print("Nuevo Correo (dejar vacío para no modificar): ");
         String nuevoCorreo = sc.nextLine();
-        System.out.print("Nueva Dirección (dejar vacío para no modificar): ");
+        System.out.print("Nueva Direccion (dejar vacío para no modificar): ");
         String nuevaDir = sc.nextLine();
+        
         
         String nuevoRepLeg = null;
         String nuevoDocRepLeg = null;
@@ -184,7 +189,7 @@ public class ClienteView {
             docEditar, 
             nuevoTel, 
             nuevoCorreo, 
-            nuevaDir, 
+            ubicontrolador.editarUbicacion(get), 
             nuevoRepLeg,
             nuevoDocRepLeg,
             documentoJustificante

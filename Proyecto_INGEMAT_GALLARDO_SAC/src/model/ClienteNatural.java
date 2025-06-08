@@ -12,8 +12,8 @@ public class ClienteNatural extends Cliente{
     private String nombre;
     private String dni;
 
-    public ClienteNatural(String direccion, String telefono, String correo, String nombre, String dni) {
-        super(direccion, telefono, correo, TIPO_NATURAL);
+    public ClienteNatural(Ubicacion ubicacion, String telefono, String correo, String nombre, String dni) {
+        super(ubicacion, telefono, correo, TIPO_NATURAL);
         setNombre(nombre);
         setDni(dni);
     }
@@ -52,6 +52,6 @@ public class ClienteNatural extends Cliente{
 
     @Override
     public String toString() {//IMPRESIÓN DE DATOS DEL CLIENTE NATURAL
-        return super.toString() + String.format(" | Tipo: Natural | Nombre: %s | DNI: %s", nombre, dni);
+        return super.toString() + String.format("\n | Tipo: Natural | Nombre: %s | DNI: %s", nombre, dni);
     }
 }

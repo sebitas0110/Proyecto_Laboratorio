@@ -7,6 +7,7 @@ import controller.ClienteController;
 import view.ClienteView;
 import model.Administrador;
 import controller.AdministradorController;
+import controller.UbicacionController;
 import view.AdministradorView;
 /**
  *
@@ -22,11 +23,11 @@ public class Tester {
         boolean accesoConcedido = view.mostrarLogin();
 
         if (accesoConcedido) {
-            // Aquí va el resto de tu programa
             System.out.println("Bienvenido al sistema, continúa la ejecución...");
             //CLIENTE
             ClienteController controlador = new ClienteController();
-            ClienteView vista = new ClienteView(controlador);
+            UbicacionController ubicontroller = new UbicacionController();
+            ClienteView vista = new ClienteView(controlador, ubicontroller);
         
             vista.mostrarMenuPrincipal();
         } else {

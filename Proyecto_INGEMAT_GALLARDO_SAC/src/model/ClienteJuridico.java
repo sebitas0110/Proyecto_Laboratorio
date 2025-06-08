@@ -21,10 +21,10 @@ public class ClienteJuridico extends Cliente{
     private String documentoRepLeg;
     private int tipoEmpresa;
 
-    public ClienteJuridico(String direccion, String telefono, String correo, 
+    public ClienteJuridico(Ubicacion ubicacion, String telefono, String correo, 
             String razonSocial, String ruc, String propietario, String docPropietario,String representanteLegal, 
             String documentoRepLeg, int tipoEmpresa) {
-        super(direccion, telefono, correo, TIPO_JURIDICO);
+        super(ubicacion, telefono, correo, TIPO_JURIDICO);
         setRazonSocial(razonSocial);
         setRuc(ruc);
         setPropietario(propietario);

@@ -14,15 +14,15 @@ public abstract class Cliente {
     public static final int TIPO_NATURAL = 1;
     public static final int TIPO_JURIDICO = 2;
     
-    private String direccion;
+    private Ubicacion ubicacion;
     private String telefono;
     private String correo;
     private String idCliente;
     private int tipoCliente;
     
-    public Cliente(String direccion, String telefono, String correo, int tipoCliente) {
+    public Cliente(Ubicacion ubicacion, String telefono, String correo, int tipoCliente) {
         setIdCliente(idCliente);
-        setDireccion(direccion);
+        setUbicacion(ubicacion);
         setTelefono(telefono);
         setCorreo(correo);
         setTipoCliente(tipoCliente);
@@ -57,21 +57,16 @@ public abstract class Cliente {
         }
         this.correo = correo;
     }
-
-    public void setDireccion(String direccion) {//VALIDA QUE LA DIRECCION NO PUEDA SER NULL Y SEA OBLIGATORIA DE PONER
-        if (direccion == null || direccion.trim().isEmpty()) {
-            throw new IllegalArgumentException("La dirección no puede estar vacía");
+    public void setUbicacion(Ubicacion ubicacion) {
+        if (ubicacion == null) {
+            throw new IllegalArgumentException("La ubicación no puede ser null");
         }
-        this.direccion = direccion;
+        this.ubicacion = ubicacion;
     }
-    
     
     //GETTERS
     public String getCorreo() { 
         return correo; 
-    }
-    public String getDireccion() { 
-        return direccion; 
     }
     public String getIdCliente() { 
         return idCliente; 
@@ -83,11 +78,14 @@ public abstract class Cliente {
     public int getTipoCliente() {
         return tipoCliente;
     }
+    public Ubicacion getUbicacion() {
+        return ubicacion;
+    }
 
     //Constructor
     @Override
     public String toString() {//CONSTRUCTOR PARA IMPRESIÓN DE LOS DATOS DEL CLIENTE
         return String.format("- ID: %s | Dirección: %s | Teléfono: %s | Email: %s",
-                idCliente, direccion, telefono, correo);
+                idCliente, ubicacion, telefono, correo);
     }
 }

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import model.Cliente;
 import model.ClienteJuridico;
 import model.ClienteNatural;
+import model.Ubicacion;
 
 /**
  *
@@ -15,6 +16,7 @@ import model.ClienteNatural;
 public class ClienteController {
     private ArrayList<Cliente> listaClientes = new ArrayList<>();
     private int contadorClientes = 1;
+    private UbicacionController ubicacion = new UbicacionController();
 
     // VALIDAR DOCUMENTO REPETIDO
     private boolean documentoYaExiste(String documento) {
@@ -31,13 +33,13 @@ public class ClienteController {
     }
 
     //Método para agregar a clientes naturales
-    public ClienteNatural agregarCliNat(String direccion, String telefono, String correo, String nombre, String dni) {
+    public ClienteNatural agregarCliNat(Ubicacion ubicacion, String telefono, String correo, String nombre, String dni) {
         if (documentoYaExiste(dni)) {
           System.out.println("Ya existe un cliente con el DNI: " + dni);
           return null;
         }
         try {
-        ClienteNatural cn = new ClienteNatural(direccion, telefono, correo, nombre, dni);
+        ClienteNatural cn = new ClienteNatural(ubicacion, telefono, correo, nombre, dni);
         String id = generarIdCliente();  // Generar ID SOLO después de construcción exitosa
         cn.setIdCliente(id);
         listaClientes.add(cn);
@@ -50,7 +52,7 @@ public class ClienteController {
     }
 
     //Método para agregar a clientes jurídicos
-    public ClienteJuridico agregarCliJur(String direccion, String telefono, String correo, String razonSocial, 
+    public ClienteJuridico agregarCliJur(Ubicacion ubicacion, String telefono, String correo, String razonSocial, 
                                                 String ruc, String propietario, String docPropietario, String representanteLegal, 
                                                 String documentoRepLeg, int tipoEmpresa) {
         if (documentoYaExiste(ruc)) {
@@ -58,7 +60,7 @@ public class ClienteController {
           return null;
         }
        try {
-        ClienteJuridico cj = new ClienteJuridico(direccion, telefono, correo, 
+        ClienteJuridico cj = new ClienteJuridico(ubicacion, telefono, correo, 
                 razonSocial, ruc, propietario, docPropietario, representanteLegal, 
                 documentoRepLeg, tipoEmpresa);
         String id = generarIdCliente();  // Generar ID solo si todo está bien
@@ -84,7 +86,7 @@ public class ClienteController {
     }
 
     //Método para modificar al cliente mediante número de documento(dni o ruc)
-    public boolean editarCliente(String documento, String nuevoTelefono, String nuevoCorreo, String nuevaDireccion, 
+    public boolean editarCliente(String documento, String nuevoTelefono, String nuevoCorreo, Ubicacion nuevaDireccion, 
                              String nuevoRepresentanteLegal, String nuevoDocRepLeg,boolean documentoJustificante) {
     Cliente c = buscarCliente(documento);
     
@@ -94,8 +96,10 @@ public class ClienteController {
                 c.setTelefono(nuevoTelefono);
             if (nuevoCorreo != null && !nuevoCorreo.isBlank())
                 c.setCorreo(nuevoCorreo);
-            if (nuevaDireccion != null && !nuevaDireccion.isBlank())
-                c.setDireccion(nuevaDireccion);
+            //GENERAR UN CONDICIONAL Y YA NO USAR UN METODO EDITAR SINO REUTILIZAR EL METODO CREAR UBICACION PARA EVITAR PROBLEMAS
+            if(nuevaDireccion != null && !nuevaDireccion.equals(null)){
+                ubicacion.crearUbicacion();
+            }
 
             // Solo si es un cliente jurídico
             if (c.getTipoCliente() == Cliente.TIPO_JURIDICO && c instanceof ClienteJuridico) {
