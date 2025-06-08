@@ -25,7 +25,4 @@ public class EmpresaSolicitante {
         return nombre;
     }
 
-    /*public ArrayList<Solicitud> obtenerSolicitudes() {
-        return new ArrayList<>(); // ejemplo
-    }*/
 }

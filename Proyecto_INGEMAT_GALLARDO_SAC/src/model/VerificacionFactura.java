@@ -1,13 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package model;
 
-/**
- *
- * @author Usuario
- */
 public class VerificacionFactura {
-    
+   private int ID_Verificacion;
+    private int ID_Factura;
+
+    public boolean verificarFactura() {
+        // Lógica
+        return true;
+    }
+
+    public void realizarVerificacion() {
+        // Lógica
+    }
 }
